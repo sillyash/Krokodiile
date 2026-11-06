@@ -1,6 +1,6 @@
 <template>
   <footer class="site-footer">
-    <p>© {{ new Date().getFullYear() }} FiiReFLY</p>
+    <p>© {{ new Date().getFullYear() }} TRUC</p>
   </footer>
 </template>
 
@@ -14,7 +14,8 @@ export default {
 .site-footer {
   padding: 1rem;
   text-align: center;
-  border-top: 2px solid var(--color-border);
+  background-color: var(--color-surface);
+  transition: background-color var(--theme-transition-duration) ease;
 }
 
 .site-footer p {

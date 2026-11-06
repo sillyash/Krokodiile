@@ -1,7 +1,7 @@
 <template>
   <header class="site-header">
     <RouterLink id="branding" to="/">
-      <h1>FiiReFLY</h1>
+      <h1>TRUC</h1>
     </RouterLink>
 
     <div id="navbar">
@@ -9,12 +9,21 @@
       <RouterLink to="/soirees" class="nav-link">Soirées</RouterLink>
       <RouterLink to="/livre-dor" class="nav-link">Livre d'or</RouterLink>
     </div>
+
+    <div class="toggles">
+      <ThemeToggle />
+    </div>
   </header>
 </template>
 
 <script lang="ts">
+import ThemeToggle from '@/components/ThemeToggle.vue'
+
 export default {
   name: 'AppHeader',
+  components: {
+    ThemeToggle,
+  },
 }
 </script>
 
@@ -37,7 +46,8 @@ export default {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 1rem;
-  border-bottom: 2px solid var(--color-border);
+  background-color: var(--color-surface);
+  transition: background-color var(--theme-transition-duration) ease;
 }
 
 #navbar {
@@ -45,6 +55,10 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem 1rem;
+}
+
+.toggles {
+  justify-self: end;
 }
 
 .nav-link {

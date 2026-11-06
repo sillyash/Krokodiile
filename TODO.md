@@ -28,8 +28,9 @@ pre-commit
 - [x] header
 - [x] footer
 - [x] css base
-  - [ ] theme
+  - [x] theme
   - [x] footer/header/main spacing
+  - [x] dark mode
 
 ## API
 
