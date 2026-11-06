@@ -15,6 +15,7 @@ export default {
   padding: 1rem;
   text-align: center;
   background-color: var(--color-surface);
+  transition: background-color var(--theme-transition-duration) ease;
 }
 
 .site-footer p {

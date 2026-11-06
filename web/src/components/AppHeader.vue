@@ -9,12 +9,21 @@
       <RouterLink to="/soirees" class="nav-link">Soirées</RouterLink>
       <RouterLink to="/livre-dor" class="nav-link">Livre d'or</RouterLink>
     </div>
+
+    <div class="toggles">
+      <ThemeToggle />
+    </div>
   </header>
 </template>
 
 <script lang="ts">
+import ThemeToggle from '@/components/ThemeToggle.vue'
+
 export default {
   name: 'AppHeader',
+  components: {
+    ThemeToggle,
+  },
 }
 </script>
 
@@ -38,6 +47,7 @@ export default {
   align-items: center;
   padding: 1rem;
   background-color: var(--color-surface);
+  transition: background-color var(--theme-transition-duration) ease;
 }
 
 #navbar {
@@ -45,6 +55,10 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem 1rem;
+}
+
+.toggles {
+  justify-self: end;
 }
 
 .nav-link {
