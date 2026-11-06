@@ -1,7 +1,7 @@
 <template>
   <header class="site-header">
     <RouterLink id="branding" to="/">
-      <h1>FiiReFLY</h1>
+      <h1>TRUC</h1>
     </RouterLink>
 
     <div id="navbar">
@@ -37,7 +37,7 @@ export default {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 1rem;
-  border-bottom: 2px solid var(--color-border);
+  background-color: var(--color-surface);
 }
 
 #navbar {
