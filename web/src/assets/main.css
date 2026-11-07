@@ -14,6 +14,17 @@
   --color-selection-text: #f1f0e6;
 
   --theme-transition-duration: 0.3s;
+
+  /* ForestBackground.vue: cherry blossom & autumn */
+  --forest-sky-top: #fde9d6;
+  --forest-sky-bottom: #f6cdd5;
+  --forest-sun: #ec7fa3;
+  --forest-hills: #e2b0aa;
+  --forest-pine: #4c6447;
+  --forest-ground: #7d8b58;
+  --forest-trunk: #6b4a3a;
+  --forest-canopy-pink: #f0a3bc;
+  --forest-canopy-orange: #e48a4c;
 }
 
 :root[data-theme='night'] {
@@ -24,6 +35,16 @@
   --color-border: #879477;
   --color-selection-bg: #e58aa5;
   --color-selection-text: #171a16;
+
+  --forest-sky-top: var(--color-bg);
+  --forest-sky-bottom: #2b1f27;
+  --forest-sun: #f29bb5;
+  --forest-hills: #262d22;
+  --forest-pine: #151b13;
+  --forest-ground: #10160e;
+  --forest-trunk: #1e1712;
+  --forest-canopy-pink: #7e3a58;
+  --forest-canopy-orange: #6e4226;
 }
 
 body {
