@@ -42,7 +42,29 @@ ALLOWED_HOSTS = env_list('FIIREFLY_ALLOWED_HOSTS', 'localhost,127.0.0.1')
 
 # Frontend origins allowed to call the API (Vite dev server by default).
 CORS_ALLOWED_ORIGINS = env_list('FIIREFLY_CORS_ALLOWED_ORIGINS', 'http://localhost:5173')
-CSRF_TRUSTED_ORIGINS = env_list('FIIREFLY_CSRF_TRUSTED_ORIGINS')
+# The frontend sends the session cookie with its requests.
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = env_list('FIIREFLY_CSRF_TRUSTED_ORIGINS') or CORS_ALLOWED_ORIGINS
+
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+
+# Where users land after logging in (trailing slash, hash routes are appended).
+FRONTEND_URL = os.environ.get('FIIREFLY_FRONTEND_URL', 'http://localhost:5173/')
+
+# Arise Connect OAuth client, see https://connect.iiens.net/dashboard/clients
+ARISE = {
+    'CLIENT_ID': os.environ.get('FIIREFLY_ARISE_CLIENT_ID', ''),
+    'CLIENT_SECRET': os.environ.get('FIIREFLY_ARISE_CLIENT_SECRET', ''),
+    'ISSUER': os.environ.get('FIIREFLY_ARISE_ISSUER', 'https://oidc.iiens.net').rstrip('/'),
+    'SCOPES': os.environ.get(
+        'FIIREFLY_ARISE_SCOPES',
+        'openid profile user.profile user.id user.preferred_nickname',
+    ),
+    'REDIRECT_URI': os.environ.get(
+        'FIIREFLY_ARISE_REDIRECT_URI', 'http://localhost:8000/auth/callback/'
+    ),
+}
 
 
 # Application definition
@@ -57,6 +79,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'fiirefly_api.core',
+    'fiirefly_api.accounts',
 ]
 
 MIDDLEWARE = [
@@ -148,7 +171,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # https://www.django-rest-framework.org/api-guide/settings/
 
 REST_FRAMEWORK = {
-    # Read-only for visitors; endpoints that accept anonymous POSTs (livre d'or) override this.
+    # Read-only for visitors; logged-in users (Arise Connect) can write.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],

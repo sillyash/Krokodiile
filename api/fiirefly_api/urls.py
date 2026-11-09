@@ -10,6 +10,7 @@ router.register('livre-dor', LivreDorEntryViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('auth/', include('fiirefly_api.accounts.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
 ]
