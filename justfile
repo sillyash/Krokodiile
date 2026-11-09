@@ -13,9 +13,10 @@ setup: web-setup api-setup hooks
 web-setup:
     cd web && npm install
 
-# install api deps + run migrations
+# install api deps + create api/.env + run migrations
 api-setup:
     cd api && uv sync
+    cd api && test -f .env || cp .env.example .env
     cd api && uv run manage.py migrate
 
 # install pre-commit
