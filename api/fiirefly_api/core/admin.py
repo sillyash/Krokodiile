@@ -12,10 +12,10 @@ class SoireeAdmin(admin.ModelAdmin):
 
 @admin.register(LivreDorEntry)
 class LivreDorEntryAdmin(admin.ModelAdmin):
-    list_display = ['nom', 'message', 'created_at', 'is_visible']
+    list_display = ['nom', 'auteur', 'message', 'created_at', 'is_visible']
     list_editable = ['is_visible']
-    list_filter = ['is_visible']
-    search_fields = ['nom', 'message']
+    list_filter = ['is_visible', 'auteur']
+    search_fields = ['nom', 'message', 'auteur__username']
     actions = ['approve', 'hide']
 
     @admin.action(description='Rendre visibles')

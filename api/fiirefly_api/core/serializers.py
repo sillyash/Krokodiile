@@ -13,4 +13,4 @@ class LivreDorEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = LivreDorEntry
         fields = ['id', 'nom', 'message', 'created_at']
-        read_only_fields = ['created_at']
+        read_only_fields = ['nom', 'created_at']

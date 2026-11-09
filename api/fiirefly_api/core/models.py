@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -18,11 +19,18 @@ class Soiree(models.Model):
 
 
 class LivreDorEntry(models.Model):
+    auteur = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='livre_dor_entries',
+    )
+    # Name at posting time, kept even if the user is deleted.
     nom = models.CharField(max_length=50)
     message = models.TextField(max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
-    # Anonymous submissions stay hidden until approved in the admin.
-    is_visible = models.BooleanField(default=False)
+    # Can be hidden from the admin.
+    is_visible = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['-created_at']
