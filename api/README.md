@@ -6,6 +6,7 @@ Django REST Framework
 
 ```bash
 uv sync
+cp .env.example .env  # puis remplir
 uv run manage.py migrate
 uv run manage.py createsuperuser
 uv run manage.py runserver
@@ -16,11 +17,42 @@ uv run manage.py runserver
 
 ## Variables d'environnement
 
-| Variable                        | Defaut                  | Role                      |
-| ------------------------------- | ----------------------- | ------------------------- |
-| `FIIREFLY_DEBUG`                | `true`                  | `false` en prod           |
-| `FIIREFLY_SECRET_KEY`           | cle locale si debug     | obligatoire en prod       |
-| `FIIREFLY_ALLOWED_HOSTS`        | `localhost,127.0.0.1`   | domaines de l'API         |
-| `FIIREFLY_CORS_ALLOWED_ORIGINS` | `http://localhost:5173` | origines du front         |
-| `FIIREFLY_CSRF_TRUSTED_ORIGINS` | vide                    | origines HTTPS de l'admin |
-| `FIIREFLY_DB_PATH`              | `db.sqlite3`            | chemin de la DB SQLite    |
+Lues depuis l'environnement ou `api/.env` (cf. [`.env.example`](.env.example)).
+
+| Variable                        | Defaut                                                        | Role                          |
+| ------------------------------- | ------------------------------------------------------------- | ----------------------------- |
+| `FIIREFLY_DEBUG`                | `true`                                                        | `false` en prod               |
+| `FIIREFLY_SECRET_KEY`           | cle locale si debug                                           | obligatoire en prod           |
+| `FIIREFLY_ALLOWED_HOSTS`        | `localhost,127.0.0.1`                                         | domaines de l'API             |
+| `FIIREFLY_CORS_ALLOWED_ORIGINS` | `http://localhost:5173`                                       | origines du front             |
+| `FIIREFLY_CSRF_TRUSTED_ORIGINS` | origines CORS                                                 | origines HTTPS de confiance   |
+| `FIIREFLY_DB_PATH`              | `db.sqlite3`                                                  | chemin de la DB SQLite        |
+| `FIIREFLY_FRONTEND_URL`         | `http://localhost:5173/`                                      | URL du front (avec `/` final) |
+| `FIIREFLY_ARISE_CLIENT_ID`      | vide                                                          | client Arise Connect          |
+| `FIIREFLY_ARISE_CLIENT_SECRET`  | vide                                                          | secret du client              |
+| `FIIREFLY_ARISE_ISSUER`         | `https://oidc.iiens.net`                                      | serveur OAuth Arise           |
+| `FIIREFLY_ARISE_SCOPES`         | `openid profile user.profile user.id user.preferred_nickname` | scopes demandes               |
+| `FIIREFLY_ARISE_REDIRECT_URI`   | `http://localhost:8000/auth/callback/`                        | callback OAuth                |
+
+## Arise Connect
+
+Login via OAuth (authorization code + PKCE), le code est echange cote API
+(le serveur OAuth n'autorise pas le CORS).
+
+1. Creer un client sur https://connect.iiens.net/dashboard/clients :
+   - Token Endpoint Auth Method : `Client Secret Basic`
+   - Grant type `authorization_code`, response type `code`
+   - Redirect URI : `FIIREFLY_ARISE_REDIRECT_URI` (pas de `#` possible)
+2. Renseigner `FIIREFLY_ARISE_CLIENT_ID` et `FIIREFLY_ARISE_CLIENT_SECRET` dans `api/.env`.
+
+Routes :
+
+| Route             | Role                                                   |
+| ----------------- | ------------------------------------------------------ |
+| `/auth/login/`    | redirige vers Arise, `?next=/route-du-front` au retour |
+| `/auth/callback/` | retour d'Arise, cree la session puis redirige au front |
+| `/auth/logout/`   | `POST`, ferme la session                               |
+| `/auth/me/`       | utilisateur connecte (ou `null`) + jeton CSRF          |
+
+La session est un cookie : l'API doit etre sur le meme site que le front
+(ex. `api.fiirefly.sillyash.com` pour `sillyash.com`).

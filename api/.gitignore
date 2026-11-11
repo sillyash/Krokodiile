@@ -8,3 +8,6 @@ venv/
 .venv/
 ENV/
 staticfiles/
+
+# Local env (see .env.example)
+.env

@@ -23,6 +23,16 @@ TypeScript cannot handle type information for `.vue` imports by default, so we r
 
 See [Vite Configuration Reference](https://vite.dev/config/).
 
+## Variables d'environnement
+
+| Variable       | Fichier            | Role                                 |
+| -------------- | ------------------ | ------------------------------------ |
+| `VITE_API_URL` | `.env.development` | API locale (`http://localhost:8000`) |
+| `VITE_API_URL` | `.env.production`  | API de prod, meme site que le front  |
+
+Surcharge locale possible dans `.env.local` (ignore par git).
+Le chemin de base (`/Krokodiile/`) est fourni au build par GitHub Pages.
+
 ## Project Setup
 
 ```sh

@@ -11,17 +11,20 @@
     </div>
 
     <div class="toggles">
+      <AuthButton />
       <ThemeToggle />
     </div>
   </header>
 </template>
 
 <script lang="ts">
+import AuthButton from '@/components/AuthButton.vue'
 import ThemeToggle from '@/components/ThemeToggle.vue'
 
 export default {
   name: 'AppHeader',
   components: {
+    AuthButton,
     ThemeToggle,
   },
 }
@@ -58,6 +61,9 @@ export default {
 }
 
 .toggles {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   justify-self: end;
 }
 
