@@ -27,6 +27,7 @@ Lues depuis l'environnement ou `api/.env` (cf. [`.env.example`](.env.example)).
 | `FIIREFLY_CORS_ALLOWED_ORIGINS` | `http://localhost:5173`                                       | origines du front             |
 | `FIIREFLY_CSRF_TRUSTED_ORIGINS` | origines CORS                                                 | origines HTTPS de confiance   |
 | `FIIREFLY_DB_PATH`              | `db.sqlite3`                                                  | chemin de la DB SQLite        |
+| `FIIREFLY_STATIC_ROOT`          | `staticfiles`                                                 | sortie de `collectstatic`     |
 | `FIIREFLY_FRONTEND_URL`         | `http://localhost:5173/`                                      | URL du front (avec `/` final) |
 | `FIIREFLY_ARISE_CLIENT_ID`      | vide                                                          | client Arise Connect          |
 | `FIIREFLY_ARISE_CLIENT_SECRET`  | vide                                                          | secret du client              |
@@ -55,4 +56,18 @@ Routes :
 | `/auth/me/`       | utilisateur connecte (ou `null`) + jeton CSRF          |
 
 La session est un cookie : l'API doit etre sur le meme site que le front
-(ex. `api.fiirefly.sillyash.com` pour `sillyash.com`).
+(ex. `fiirefly-api.sillyash.com` pour `sillyash.com`).
+
+## Production
+
+Deploye sur le RasPi homelab a https://fiirefly-api.sillyash.com (Gunicorn + nginx,
+via Cloudflare Tunnel). Config et scripts dans le repo homelab :
+`services/fiirefly/` ([README](https://github.com/sillyash/homelab/tree/main/services/fiirefly)).
+
+```bash
+git -C ~/Krokodiile pull
+sudo ~/homelab/services/fiirefly/deploy.sh
+```
+
+- API : https://fiirefly-api.sillyash.com/api/
+- Admin : https://fiirefly-api.sillyash.com/admin/

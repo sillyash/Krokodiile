@@ -49,6 +49,10 @@ CSRF_TRUSTED_ORIGINS = env_list('FIIREFLY_CSRF_TRUSTED_ORIGINS') or CORS_ALLOWED
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 
+# In production nginx terminates TLS and sets X-Forwarded-Proto: https, so Django
+# knows requests are secure (CSRF Origin check on the admin login, secure cookies).
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Where users land after logging in (trailing slash, hash routes are appended).
 FRONTEND_URL = os.environ.get('FIIREFLY_FRONTEND_URL', 'http://localhost:5173/')
 
@@ -159,7 +163,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+# collectstatic output (admin CSS/JS), served by nginx in production.
+STATIC_ROOT = os.environ.get('FIIREFLY_STATIC_ROOT', BASE_DIR / 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

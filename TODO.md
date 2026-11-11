@@ -45,4 +45,7 @@ pre-commit
 
 ### Deploiement
 
-walala cv etre cho ca la tt de suite mdr
+- [x] gunicorn + settings prod (proxy HTTPS, `FIIREFLY_STATIC_ROOT`)
+- [x] homelab : systemd + nginx + deploy.sh (`services/fiirefly/`)
+- [ ] cert + route Cloudflare Tunnel `fiirefly-api.sillyash.com`
+- [ ] redirect URI Arise Connect en prod
